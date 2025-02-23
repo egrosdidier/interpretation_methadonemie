@@ -37,6 +37,32 @@ ax.grid(True)
 # Affichage du graphe dans Streamlit
 st.pyplot(fig)
 
+# Détermination de la situation clinique
+if 100 <= methadonemie <= 400 and 30 <= eddp <= 300:
+    situation = "Profil normal"
+    color = "green"
+elif methadonemie < 100:
+    situation = "Méthadonémie trop basse (métabolisme rapide ou sous-dosage)"
+    color = "red"
+elif methadonemie > 600:
+    situation = "Méthadonémie très élevée (risque de sédation et QT long)"
+    color = "red"
+elif methadonemie > 400:
+    situation = "Méthadonémie élevée (surveillance recommandée)"
+    color = "orange"
+elif eddp < 30:
+    situation = "EDDP trop bas (métabolisme faible ou induction enzymatique possible)"
+    color = "red"
+elif eddp > 300:
+    situation = "EDDP trop haut (métabolisme rapide, risque de manque)"
+    color = "red"
+else:
+    situation = "Profil non standard nécessitant évaluation clinique"
+    color = "orange"
+
+# Affichage de la situation clinique
+st.markdown(f"<p style='color:{color}; font-size:20px'><b>{situation}</b></p>", unsafe_allow_html=True)
+
 # Tableau d'interprétation
 st.write("## Tableau de classification du métabolisme")
 st.write("| Situation clinique | Méthadone plasmatique | EDDP | Interprétation |")
